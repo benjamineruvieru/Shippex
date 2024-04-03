@@ -1,31 +1,11 @@
 import {DeviceEventEmitter} from 'react-native';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from '../constants/Variables';
-import countryData from '../constants/output.json';
-import citiesData from '../constants/lgas.json';
 
 export const getPercentHeight = (percent: number) => {
   return (percent / 100) * SCREEN_HEIGHT;
 };
 export const getPercentWidth = (percent: number) => {
   return (percent / 100) * SCREEN_WIDTH;
-};
-
-export const getState = ({country}: {country: string}) => {
-  if (!country) return [];
-  const data = countryData.find(
-    data => data.name.toLowerCase() === country.toLowerCase(),
-  );
-  return data?.states.map(d => {
-    return d;
-  });
-};
-
-export const getCity = ({country, state}: {country: string; state: string}) => {
-  if (!country || !state) return [];
-  const item = citiesData.find(
-    data => data.state?.toLowerCase() === state?.toLowerCase(),
-  );
-  return item?.lgas;
 };
 
 export const formatDate = (date: string) => {

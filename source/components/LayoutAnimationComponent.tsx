@@ -2,6 +2,7 @@ import {ViewStyle} from 'react-native';
 import React, {ReactNode} from 'react';
 import Animated, {
   Easing,
+  FadeInDown,
   FadeInLeft,
   FadeInRight,
   FadeInUp,
@@ -36,7 +37,7 @@ const LayoutAnimationComponent: React.FC<LayoutAnimationComponentProps> = ({
     ? FadeInLeft.delay(delay ?? 0)
         .duration(500)
         .easing(Easing.ease)
-    : FadeInUp.delay(delay ?? 0)
+    : FadeInDown.delay(delay ?? 0)
         .duration(500)
         .easing(Easing.ease),
   exit = rightInOut

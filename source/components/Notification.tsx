@@ -57,7 +57,6 @@ const Notification: React.FC<NotificationProps> = ({goDown, goUp}) => {
     const myEventListener = DeviceEventEmitter.addListener(
       'openNotification',
       event => {
-        console.log(event);
         goDown({num: notheight.current - 3});
         openNotification(event);
         setTimeout(() => {
@@ -87,8 +86,6 @@ const Notification: React.FC<NotificationProps> = ({goDown, goUp}) => {
           }).start();
         }
         notheight.current = e.nativeEvent.layout.height + 2;
-
-        console.log(e.nativeEvent.layout.height);
       }}>
       <TouchableOpacity
         style={{

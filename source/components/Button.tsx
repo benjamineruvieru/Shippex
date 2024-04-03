@@ -1,18 +1,18 @@
 import {
   ActivityIndicator,
+  DimensionValue,
   StyleSheet,
+  TextStyle,
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
 import React from 'react';
 import {SmallTextB} from './Text';
 import Colors from '../constants/Colors';
-import {getPercentWidth} from '../utilis/helper_functions';
-import {isPhone} from '../constants/Variables';
 
 interface ButtonProps {
   title: string;
-  width?: number;
+  width?: DimensionValue;
   style?: ViewStyle;
   load?: boolean;
   onPress?: () => void;
@@ -25,11 +25,12 @@ interface ButtonProps {
   isSec?: boolean;
   Icon?: React.ElementType;
   testID?: string;
+  textStyle?: TextStyle;
 }
 
 const Button: React.FC<ButtonProps> = ({
   title,
-  width = isPhone ? 90 : 96,
+  width = '100%',
   style,
   load,
   onPress,
@@ -40,8 +41,8 @@ const Button: React.FC<ButtonProps> = ({
   disable,
   grey,
   isSec,
-  Icon,
   testID,
+  textStyle,
 }) => {
   const styles = StyleSheet.create({
     bg: {
@@ -57,7 +58,7 @@ const Button: React.FC<ButtonProps> = ({
       marginTop: top,
       opacity: disable || load ? 0.5 : 1,
       padding: small ? 8 : load ? 17 : 20,
-      width: getPercentWidth(width),
+      width,
       ...style,
     },
   });
@@ -71,13 +72,13 @@ const Button: React.FC<ButtonProps> = ({
       {load && <ActivityIndicator color={'white'} style={{right: 15}} />}
       <SmallTextB
         style={{
-          color: isSec ? Colors.primary : grey ? Colors.dim : 'white',
-          fontFamily: small ? 'Gilroy-Medium' : 'Gilroy-SemiBold',
-          fontSize: small ? 11 : 13,
+          color: 'white',
+          fontFamily: 'SF Pro Text Bold',
+          fontSize: 14,
+          ...textStyle,
         }}>
         {title}
       </SmallTextB>
-      {Icon && <Icon style={{marginLeft: 10}} width={18} height={18} />}
     </TouchableOpacity>
   );
 };

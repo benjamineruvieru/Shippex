@@ -39,7 +39,7 @@ const Text: React.FC<TextProps> = ({
 }) => {
   const styles = StyleSheet.create({
     text: {
-      color: dim ? Colors.dim : color ? color : 'white',
+      color: color ? color : '#757281',
       includeFontPadding: false,
       ...style,
     },
@@ -114,14 +114,15 @@ export const MediumText: React.FC<TextProps> = ({
 }) => {
   const styles = StyleSheet.create({
     text: {
-      fontFamily: 'Gilroy-SemiBold',
-      fontSize: 25,
+      fontFamily: 'SF Pro Display Semibold',
+      fontSize: 30,
       ...style,
     },
   });
 
   return (
     <Text
+      color="black"
       dim={dim}
       numLines={numLines}
       onTextPress={onTextPress}
