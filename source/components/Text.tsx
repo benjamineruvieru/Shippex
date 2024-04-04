@@ -143,14 +143,16 @@ export const RegularTextB: React.FC<TextProps> = ({
 }) => {
   const styles = StyleSheet.create({
     text: {
-      fontFamily: 'Gilroy-Bold',
-      fontSize: 17,
+      fontFamily: 'SF Pro Display Semibold',
+      fontSize: 25,
+
       ...style,
     },
   });
 
   return (
     <Text
+      color="black"
       disabled={disabled}
       onPress={onPress}
       onTextPress={onTextPress}
@@ -200,6 +202,7 @@ export const SmallText: React.FC<TextProps> = ({
   numLines,
   touchStyle,
   onTextLayout = () => {},
+  color,
 }) => {
   const styles = StyleSheet.create({
     text: {
@@ -211,6 +214,7 @@ export const SmallText: React.FC<TextProps> = ({
 
   return (
     <Text
+      color={color}
       onTextLayout={onTextLayout}
       numLines={numLines}
       dim={dim}
@@ -233,8 +237,8 @@ export const SmallTextB: React.FC<TextProps> = ({
 }) => {
   const styles = StyleSheet.create({
     text: {
-      fontFamily: 'Gilroy-SemiBold',
-      fontSize: 13,
+      fontFamily: 'SF Pro Display Semibold',
+      fontSize: 14,
 
       ...style,
     },
@@ -242,6 +246,7 @@ export const SmallTextB: React.FC<TextProps> = ({
 
   return (
     <Text
+      color="#3F395C"
       disabled={disabled}
       onPress={onPress}
       onTextPress={onTextPress}

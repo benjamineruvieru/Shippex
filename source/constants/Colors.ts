@@ -4,4 +4,7 @@ export default {
   inputBg: '#F4F2F8',
   red: 'red',
   green: 'green',
+  bg: 'white',
+  cyan: '#F4F2F8',
+  blue: '#6E91EC',
 };

@@ -11,7 +11,7 @@ import ScanIcon from '../assets/svg/bottomtabs/scan.svg';
 import WalletIcon from '../assets/svg/bottomtabs/wallet.svg';
 import ProfileIcon from '../assets/svg/bottomtabs/profile.svg';
 
-export type RootStackParamList = {
+export type TabsParamList = {
   ShipmentScreen: {};
 };
 
@@ -30,8 +30,8 @@ export default function BottomNav() {
     tabBarActiveTintColor: Colors.primary,
     tabBarInactiveTintColor: Colors.tabBlur,
     tabBarLabelStyle: {
-      fontFamily: 'Gilroy-Medium',
-      fontSize: 12,
+      fontFamily: 'SF Pro Display Regular',
+      fontSize: 13,
     },
     tabBarStyle: {
       height: Platform.OS === 'android' ? 60 : 55 + insets.bottom,
@@ -46,7 +46,7 @@ export default function BottomNav() {
       <Tab.Screen
         options={{
           tabBarIcon: ({color}) => (
-            <ShipmentIcon width={23} height={23} color={color} />
+            <ShipmentIcon width={27} height={27} color={color} />
           ),
         }}
         name="Shipments"
@@ -55,7 +55,7 @@ export default function BottomNav() {
       <Tab.Screen
         options={{
           tabBarIcon: ({color}) => (
-            <ScanIcon width={23} height={23} color={color} />
+            <ScanIcon width={27} height={27} color={color} />
           ),
         }}
         name="Scan"
@@ -64,7 +64,7 @@ export default function BottomNav() {
       <Tab.Screen
         options={{
           tabBarIcon: ({color}) => (
-            <WalletIcon width={23} height={23} color={color} />
+            <WalletIcon width={27} height={27} color={color} />
           ),
         }}
         name="Wallet"
@@ -73,7 +73,7 @@ export default function BottomNav() {
       <Tab.Screen
         options={{
           tabBarIcon: ({color}) => (
-            <ProfileIcon width={23} height={23} color={color} />
+            <ProfileIcon width={27} height={27} color={color} />
           ),
         }}
         name="Profile"

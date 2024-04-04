@@ -3,6 +3,7 @@ import BottomNav from './BottomNav';
 import LoginScreen from '../features/auth/screens/LoginScreen';
 import SplashScreen from '../features/onboarding/screens/SplashScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {getItem} from '../services/storage';
 
 export type RootStackParamList = {
   SplashScreen: undefined;
@@ -23,6 +24,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const StackNav: React.FC = () => {
   return (
     <Stack.Navigator
+      initialRouteName={
+        getItem('loggedIn') === 'true' ? 'BottomNav' : 'SplashScreen'
+      }
       screenOptions={{
         header: () => null,
       }}>

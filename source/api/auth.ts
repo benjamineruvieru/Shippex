@@ -1,7 +1,12 @@
 import axios from 'axios';
 import {BASEURL} from './base';
 
-export const login = ({usr, pwd}) => {
+interface LoginCredentials {
+  usr: string;
+  pwd: string;
+}
+
+export const login = ({usr, pwd}: LoginCredentials) => {
   const formData = new FormData();
 
   formData.append('usr', usr);
@@ -17,9 +22,7 @@ export const login = ({usr, pwd}) => {
     transformRequest: () => {
       return formData;
     },
-    onUploadProgress: progressEvent => {
-      console.log(progressEvent);
-    },
+
     data: formData,
   };
 

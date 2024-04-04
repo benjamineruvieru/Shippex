@@ -15,6 +15,8 @@ if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 }
+
+StatusBar.setBarStyle('dark-content');
 const App = () => {
   const transY = useRef(new Animated.Value(0)).current;
   const goDown = ({num = 128}) => {

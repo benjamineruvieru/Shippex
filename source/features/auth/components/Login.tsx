@@ -7,6 +7,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import {login} from '../../../api/auth';
 import {showNotification} from '../../../utilis/helper_functions';
+import {setItem} from '../../../services/storage';
 
 const Login = ({onClose}: {onClose?: () => void}) => {
   const [usr, setUsr] = useState('');
@@ -17,7 +18,9 @@ const Login = ({onClose}: {onClose?: () => void}) => {
     setLoad(true);
     login({usr, pwd})
       .then(data => {
-        console.log('res', data.data);
+        const {full_name} = data?.data;
+        setItem('name', full_name);
+        setItem('loggedIn', 'true');
       })
       .catch(err => {
         const {message} = err?.response?.data ?? {};
