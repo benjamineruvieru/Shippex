@@ -115,7 +115,7 @@ export const MediumText: React.FC<TextProps> = ({
   const styles = StyleSheet.create({
     text: {
       fontFamily: 'SF Pro Display Semibold',
-      fontSize: 30,
+      fontSize: 34,
       ...style,
     },
   });
@@ -167,17 +167,19 @@ export const RegularText: React.FC<TextProps> = ({
   disabled,
   onTextPress,
   dim,
+  color,
 }) => {
   const styles = StyleSheet.create({
     text: {
-      fontFamily: 'Gilroy-SemiBold',
-      fontSize: 15,
+      fontFamily: 'SF Pro Text Regular',
+      fontSize: 17,
       ...style,
     },
   });
 
   return (
     <Text
+      color={color}
       dim={dim}
       disabled={disabled}
       onPress={onPress}
@@ -201,7 +203,7 @@ export const SmallText: React.FC<TextProps> = ({
 }) => {
   const styles = StyleSheet.create({
     text: {
-      fontFamily: 'Gilroy-Medium',
+      fontFamily: 'SF Pro Text Regular',
       fontSize: 13,
       ...style,
     },

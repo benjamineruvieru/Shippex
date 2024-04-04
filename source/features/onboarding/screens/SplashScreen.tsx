@@ -17,12 +17,13 @@ import {useNavigation} from '@react-navigation/native';
 import {NavigationProp, RootStackParamList} from '../../../navigation/StackNav';
 import {Modalize} from 'react-native-modalize';
 import Login from '../../auth/components/Login';
+import {getPercentHeight} from '../../../utilis/helper_functions';
 
 const logo = require('../../../assets/images/logobottom.png');
 const logohead = require('../../../assets/images/logohead.png');
 const logotext = require('../../../assets/images/white-logo-text.png');
 
-const LoginView = () => {
+const LoginView = ({setModalOpen}: {setModalOpen: (arg: boolean) => void}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const modalRef: any = useRef();
 
@@ -44,7 +45,6 @@ const LoginView = () => {
 
   return (
     <SafeAreaView style={styles.flexView}>
-      <StatusBar backgroundColor={Colors.primary} />
       <View style={styles.flexView} />
       <LayoutAnimationComponent delay={1000}>
         <Image source={logotext} style={styles.image} />
@@ -60,9 +60,36 @@ const LoginView = () => {
           onPress={onLoginPress}
         />
       </LayoutAnimationComponent>
-      <Modalize ref={modalRef}>
-        <Login />
-      </Modalize>
+      <Modalize
+        modalStyle={{width: SCREEN_WIDTH, left: -20}}
+        withHandle={false}
+        modalHeight={getPercentHeight(98)}
+        onOpen={() => {
+          if (Platform.OS === 'android') {
+            setTimeout(() => setModalOpen(true), 300);
+            StatusBar.setBackgroundColor('transparent');
+            StatusBar.setBarStyle('light-content');
+          }
+        }}
+        onClose={() => {
+          if (Platform.OS === 'android') {
+            StatusBar.setBackgroundColor(Colors.primary);
+            StatusBar.setBarStyle('dark-content');
+            setModalOpen(false);
+          }
+        }}
+        ref={modalRef}
+        overlayStyle={{backgroundColor: 'rgba(0, 0, 0, 0.3)'}}
+        customRenderer={
+          <Animated.View style={{flex: 1}}>
+            <Login
+              onClose={() => {
+                modalRef?.current?.close();
+              }}
+            />
+          </Animated.View>
+        }
+      />
     </SafeAreaView>
   );
 };
@@ -79,6 +106,8 @@ interface LogoAnimationProps {
 
 const SplashScreen: React.FC<SplashScreenProps> = () => {
   const [splashEnd, setSplashEnd] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
   const logoAnimation = useRef<LogoAnimationProps>({
     size: new Animated.Value(36),
     transX: new Animated.Value(0),
@@ -130,13 +159,17 @@ const SplashScreen: React.FC<SplashScreenProps> = () => {
     setTimeout(() => {
       loginAnimation().start(() => {
         setSplashEnd(true);
+        if (Platform.OS === 'android') {
+          StatusBar.setBackgroundColor(Colors.primary);
+          StatusBar.setBarStyle('dark-content');
+        }
       });
     }, 1600);
   }, []);
 
   const styles = StyleSheet.create({
     mainView: {
-      backgroundColor: 'white',
+      backgroundColor: splashEnd ? 'black' : 'white',
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
@@ -158,24 +191,26 @@ const SplashScreen: React.FC<SplashScreenProps> = () => {
     },
     loginMainView: {
       position: 'absolute',
-      top: 0,
+      width: modalOpen ? SCREEN_WIDTH - 40 : SCREEN_WIDTH,
+      height: getPercentHeight(modalOpen ? 99 : 100),
       bottom: 0,
-      left: 0,
-      right: 0,
       backgroundColor: Colors.primary,
       opacity: logoAnimation.opacity,
+      borderRadius: modalOpen ? 20 : 0,
       zIndex: 1,
     },
   });
 
   return (
     <View style={styles.mainView}>
-      <View>
-        <Animated.Image source={logohead} style={styles.logohead} />
-        <Animated.Image source={logo} style={styles.logobody} />
-      </View>
+      {!splashEnd && (
+        <View>
+          <Animated.Image source={logohead} style={styles.logohead} />
+          <Animated.Image source={logo} style={styles.logobody} />
+        </View>
+      )}
       <Animated.View style={styles.loginMainView}>
-        {splashEnd && <LoginView />}
+        {splashEnd && <LoginView {...{setModalOpen}} />}
       </Animated.View>
     </View>
   );

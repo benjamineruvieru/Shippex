@@ -1,4 +1,4 @@
-import {Animated, Platform, StatusBar} from 'react-native';
+import {Animated, Platform, StatusBar, UIManager} from 'react-native';
 import React, {useRef} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
@@ -11,6 +11,9 @@ const queryClient = new QueryClient();
 if (Platform.OS === 'android') {
   StatusBar.setBackgroundColor('transparent');
   StatusBar.setTranslucent(true);
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
 }
 const App = () => {
   const transY = useRef(new Animated.Value(0)).current;

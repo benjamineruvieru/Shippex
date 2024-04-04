@@ -1,7 +1,7 @@
 import axios, {AxiosInstance} from 'axios';
 import {getItem} from '../services/storage';
 
-export const BASEURL = 'https://api.kicksciti.com/v1';
+export const BASEURL = 'https://shippex-demo.bc.brandimic.com/api/method';
 
 export const axiosBase = (): AxiosInstance => {
   const token = getItem('token');

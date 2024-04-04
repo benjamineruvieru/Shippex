@@ -15,6 +15,7 @@ export interface NavigationProp<ParamList extends RootStackParamList> {
     screen: keyof ParamList,
     params?: ParamList[keyof ParamList],
   ) => void;
+  goBack: () => void;
 }
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

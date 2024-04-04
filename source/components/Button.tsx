@@ -48,7 +48,7 @@ const Button: React.FC<ButtonProps> = ({
     bg: {
       alignItems: 'center',
       alignSelf: 'center',
-      backgroundColor,
+      backgroundColor: disable || load ? '#EAE7F2' : backgroundColor,
       borderColor: Colors.primary,
       borderRadius: small ? 5 : 8,
       borderWidth: isSec ? 1 : 0,
@@ -56,7 +56,6 @@ const Button: React.FC<ButtonProps> = ({
       justifyContent: 'center',
       marginBottom: bottom,
       marginTop: top,
-      opacity: disable || load ? 0.5 : 1,
       padding: small ? 8 : load ? 17 : 20,
       width,
       ...style,
@@ -69,12 +68,12 @@ const Button: React.FC<ButtonProps> = ({
       disabled={load || disable}
       style={styles.bg}
       onPress={onPress}>
-      {load && <ActivityIndicator color={'white'} style={{right: 15}} />}
+      {load && <ActivityIndicator color={'#A7A3B3'} style={{right: 15}} />}
       <SmallTextB
         style={{
-          color: 'white',
+          color: disable || load ? '#A7A3B3' : 'white',
           fontFamily: 'SF Pro Text Bold',
-          fontSize: 14,
+          fontSize: 15,
           ...textStyle,
         }}>
         {title}
