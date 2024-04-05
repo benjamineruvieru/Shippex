@@ -11,7 +11,15 @@ import {RegularText, RegularTextB, SmallText} from '../../components/Text';
 import Colors from '../../constants/Colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-const Button = ({text, sel, onPress}) => {
+const Button = ({
+  text,
+  sel,
+  onPress,
+}: {
+  text: string;
+  sel: boolean;
+  onPress: () => void;
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -25,7 +33,7 @@ const Button = ({text, sel, onPress}) => {
         marginRight: 15,
         marginBottom: 10,
       }}>
-      <RegularText color={sel ? Colors.primary : null}>{text}</RegularText>
+      <RegularText color={sel ? Colors.primary : undefined}>{text}</RegularText>
     </TouchableOpacity>
   );
 };

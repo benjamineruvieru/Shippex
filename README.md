@@ -1,24 +1,48 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Shippex React Native App
 
-# Getting Started
+Shippex is a React Native application which allows drivers to manage their shipment status.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Installation
 
-## Step 1: Start the Metro Server
+To run the Shippex app locally on your machine, follow these steps:
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+1. Clone the repository to your local machine:
 
-To start Metro, run the following command from the _root_ of your React Native project:
+```
+git clone https://github.com/benjamineruvieru/Shippex.git
+```
 
-```bash
-# using npm
+2. Navigate to the project directory:
+
+```
+cd Shippex
+```
+
+3. Install dependencies using npm or yarn:
+
+```
+npm install
+```
+
+or
+
+```
+yarn install
+```
+
+4. Start the development server:
+
+```
 npm start
+```
 
-# OR using Yarn
+or
+
+```
 yarn start
 ```
 
-## Step 2: Start your Application
+5. Start the application:
 
 Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
@@ -42,38 +66,33 @@ npm run ios
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+If everything is set up _correctly_, you should see the app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+You can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+## Technologies Used
 
-Now that you have successfully run the app, let's modify it.
+- React Native
+- React Navigation
+- Axios (for HTTP requests)
+- MMKV (for local storage)
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+Certainly, here's the added section to the README addressing the issue with the backend API:
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+---
 
-## Congratulations! :tada:
+## Important Note
 
-You've successfully run and modified your React Native App. :partying_face:
+Due to limitations with the backend API provided for the project, the Shippex app does not fully use the data from the shipment list API. The backend API is requiring a body to be passed in a GET request, which is a bad design and not supported by Axios and most HTTP request libraries. Ideally, the endpoint should been a POST request or require the data to be passed as query params.
 
-### Now what?
+To overcome the limitations posed by the backend API, I utilized dummy data instead of relying on the data from the API.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+As a consequence of this workaround, certain features, such as the search functionality, have cannot been implemented in the current version of the app. Due to the reliance on dummy data and the inability to access real-time information from the API, implementing search functionality was deemed impractical at this stage.
 
-# Troubleshooting
+Thank you for your understanding.
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+---
 
-# Learn More
+## License
 
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+This project is licensed under the [MIT License](LICENSE).
