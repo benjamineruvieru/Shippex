@@ -64,7 +64,12 @@ const Login = ({onClose}: {onClose?: () => void}) => {
         Please enter your First, Last name and your phone number in order to
         register
       </RegularText>
-      <Input placeholderText="Username / Email" text={usr} setText={setUsr} />
+      <Input
+        placeholderText="Username / Email"
+        text={usr}
+        setText={setUsr}
+        keyboard="email-address"
+      />
       <Input placeholderText="Password" password text={pwd} setText={setPwd} />
       <View style={{flex: 1}} />
       <Button

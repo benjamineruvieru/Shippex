@@ -1,5 +1,7 @@
 # Shippex React Native App
 
+![App Screens](source/assets/images/cover.png)
+
 Shippex is a React Native application which allows drivers to manage their shipment status.
 
 ## Installation

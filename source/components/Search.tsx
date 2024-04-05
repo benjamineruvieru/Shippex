@@ -33,6 +33,7 @@ const Search = () => {
       fontFamily: 'SF Pro Text Regular',
       fontSize: 17,
       flex: 1,
+      color: Colors.primary,
     },
   });
   return (

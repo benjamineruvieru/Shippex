@@ -1,7 +1,6 @@
 import {
   DeviceEventEmitter,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -108,6 +107,7 @@ const FilterModal = () => {
         <View style={styles.listView}>
           {data.map(text => (
             <Button
+              key={text}
               sel={selList.includes(text)}
               text={text}
               onPress={() => {

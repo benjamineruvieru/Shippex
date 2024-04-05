@@ -271,6 +271,7 @@ const Shipments = () => {
           showsVerticalScrollIndicator={false}
           data={data?.message}
           renderItem={ShipItem}
+          initialNumToRender={10}
         />
       )}
     </View>
