@@ -8,19 +8,29 @@ import Button from '../../../components/Button';
 import {login} from '../../../api/auth';
 import {showNotification} from '../../../utilis/helper_functions';
 import {setItem} from '../../../services/storage';
+import {useNavigation} from '@react-navigation/native';
 
 const Login = ({onClose}: {onClose?: () => void}) => {
   const [usr, setUsr] = useState('');
   const [pwd, setPwd] = useState('');
   const [load, setLoad] = useState(false);
 
+  const navigation = useNavigation();
   const loginFun = () => {
     setLoad(true);
     login({usr, pwd})
       .then(data => {
+        const cookies = data.headers['set-cookie'];
+        console.log('Cookies:', cookies);
+
         const {full_name} = data?.data;
         setItem('name', full_name);
         setItem('loggedIn', 'true');
+        setItem('cookies', cookies, true);
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'BottomNav'}],
+        });
       })
       .catch(err => {
         const {message} = err?.response?.data ?? {};

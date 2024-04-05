@@ -7,15 +7,21 @@ const Checkbox = ({
   value,
   setValue,
   style,
+  onPress,
 }: {
   value: boolean;
   setValue: Dispatch<SetStateAction<boolean>>;
   style?: ViewStyle;
+  onPress?: () => void;
 }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        setValue((p: boolean) => !p);
+        if (onPress) {
+          onPress();
+        } else {
+          setValue((p: boolean) => !p);
+        }
       }}
       style={{
         borderWidth: 1.5,
@@ -25,7 +31,7 @@ const Checkbox = ({
         borderRadius: 3,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: value ? Colors.primary : 'transparent',
+        backgroundColor: value ? '#D9effd' : 'transparent',
         marginRight: 5,
         ...style,
       }}>

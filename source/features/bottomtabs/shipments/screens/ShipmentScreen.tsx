@@ -10,7 +10,7 @@ import Shipments from '../components/Shipments';
 
 const ShipmentScreen = () => {
   return (
-    <Mainbackground keyboard>
+    <Mainbackground insetsBottom={-1}>
       <PageHeader />
       <View style={styles.mainBody}>
         <Greetings />
@@ -28,7 +28,7 @@ const ShipmentScreen = () => {
 export default ShipmentScreen;
 
 const styles = StyleSheet.create({
-  mainBody: {flex: 1, padding: 15},
+  mainBody: {flex: 1, padding: 15, paddingBottom: 0},
   scanfilterView: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Notification from './source/components/Notification';
 import {NavigationContainer} from '@react-navigation/native';
 import StackNav from './source/navigation/StackNav';
+import Modals from './source/features/modals';
 
 const queryClient = new QueryClient();
 if (Platform.OS === 'android') {
@@ -48,6 +49,7 @@ const App = () => {
             }}>
             <NavigationContainer>
               <StackNav />
+              <Modals />
             </NavigationContainer>
           </Animated.View>
         </SafeAreaProvider>

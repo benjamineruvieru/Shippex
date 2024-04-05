@@ -8,7 +8,9 @@ const Scan = () => {
   return (
     <TouchableOpacity style={styles.button}>
       <ScanSvg style={{marginRight: 10}} />
-      <RegularText color="white">Add Scan</RegularText>
+      <RegularText style={{fontSize: 16}} color="white">
+        Add Scan
+      </RegularText>
     </TouchableOpacity>
   );
 };

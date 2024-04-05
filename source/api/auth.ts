@@ -12,7 +12,6 @@ export const login = ({usr, pwd}: LoginCredentials) => {
   formData.append('usr', usr);
   formData.append('pwd', pwd);
 
-  console.log('form', formData);
   const config = {
     method: 'post',
     url: `${BASEURL}/login`,

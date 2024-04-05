@@ -1,6 +1,8 @@
 import {
+  ActivityIndicator,
   Animated,
   DeviceEventEmitter,
+  FlatList,
   Image,
   StyleSheet,
   TouchableOpacity,
@@ -15,21 +17,29 @@ import {
 } from '../../../../components/Text';
 import Checkbox from '../../../../components/Checkbox';
 import Colors from '../../../../constants/Colors';
-import {FlashList} from '@shopify/flash-list';
 import RightSvg from '../../../../assets/svg/icons/right.svg';
 import ExpandSvg from '../../../../assets/svg/icons/expand.svg';
+import {useApi} from '../../../../hooks/useApi';
+import {getShipments} from '../../../../api/shipment';
+import {isPhone} from '../../../../constants/Variables';
 
 const box = require('../../../../assets/images/box.png');
-var he = 0;
+
 const Head = () => {
+  const [selected, setSelected] = useState(false);
+  const toggle = () => {
+    setSelected(prev => {
+      DeviceEventEmitter.emit('markAll', !prev);
+
+      return !prev;
+    });
+  };
   return (
     <View style={styles.headMainView}>
       <RegularTextB>Shipments</RegularTextB>
-      <TouchableOpacity style={styles.selAllView}>
-        <Checkbox />
-        <RegularText style={{fontSize: 18}} color={Colors.primary}>
-          Mark All
-        </RegularText>
+      <TouchableOpacity onPress={toggle} style={styles.selAllView}>
+        <Checkbox onPress={toggle} value={selected} setValue={setSelected} />
+        <RegularText color={Colors.primary}>Mark All</RegularText>
       </TouchableOpacity>
     </View>
   );
@@ -59,8 +69,10 @@ const DestInfo = () => {
   return (
     <View>
       <SmallText color={Colors.primary}>Destination</SmallText>
-      <RegularText style={{fontSize: 20, color: 'black'}}>Cairo</RegularText>
-      <RegularText>Dokki, 22 Nile St.</RegularText>
+      <RegularText style={{fontSize: 20, color: 'black'}}>
+        Alexandria
+      </RegularText>
+      <RegularText>Smoha, 22 max St.</RegularText>
     </View>
   );
 };
@@ -110,7 +122,7 @@ const ExtraInfo = () => {
           style={{
             backgroundColor: '#6E91EC',
             marginRight: 15,
-            flex: 1.5 / 4,
+            flex: 1.2 / 4,
             justifyContent: 'center',
             alignItems: 'center',
             height: 40,
@@ -121,7 +133,7 @@ const ExtraInfo = () => {
         <TouchableOpacity
           style={{
             backgroundColor: '#25D366',
-            flex: 1.7 / 4,
+            flex: 1.6 / 4,
             justifyContent: 'center',
             alignItems: 'center',
             height: 40,
@@ -139,8 +151,9 @@ const ItemWrapper = ({children}: {children: ReactNode}) => {
   const extraheight = useRef(0);
 
   useEffect(() => {
-    const myEvent = DeviceEventEmitter.addListener('extraInfoHeight', event => {
-      console.log('extraInfoHeight', event);
+    const myEvent = DeviceEventEmitter.addListener('markAll', event => {
+      console.log('markAll', event);
+      setSelected(event);
     });
     return () => myEvent.remove();
   }, []);
@@ -197,6 +210,13 @@ const ItemWrapper = ({children}: {children: ReactNode}) => {
   });
   return (
     <View style={localStyles.itemwrapperView}>
+      <View
+        onLayout={event => {
+          extraheight.current = event.nativeEvent.layout.height;
+        }}
+        style={{opacity: 0, position: 'absolute'}}>
+        <ExtraInfo />
+      </View>
       <View style={localStyles.innerView}>
         <Checkbox
           setValue={setSelected}
@@ -211,30 +231,22 @@ const ItemWrapper = ({children}: {children: ReactNode}) => {
       <Animated.View style={localStyles.aniView}>
         <ExtraInfo />
       </Animated.View>
-      <View
-        onLayout={event => {
-          console.log('event', event.nativeEvent.layout);
-          extraheight.current = event.nativeEvent.layout.height;
-        }}
-        style={{opacity: 0, position: 'absolute'}}>
-        <ExtraInfo />
-      </View>
     </View>
   );
 };
 
-const ShipItem = ({item}) => {
-  const {num} = item ?? {};
+const ShipItem = ({item}: {item: {name: string}}) => {
+  const {name} = item ?? {};
   return (
     <ItemWrapper>
       <Image source={box} style={styles.boximg} />
       <View>
         <SmallTextB>AWB</SmallTextB>
-        <RegularTextB>{num}</RegularTextB>
+        <RegularTextB style={{fontSize: 23}}>{name}</RegularTextB>
         <View style={styles.destView}>
           <SmallText>Cario</SmallText>
           <RightSvg style={{marginHorizontal: 5}} />
-          <SmallText>Cario</SmallText>
+          <SmallText>Alexandria</SmallText>
         </View>
       </View>
       <OrderStatus />
@@ -242,15 +254,25 @@ const ShipItem = ({item}) => {
   );
 };
 const Shipments = () => {
+  const {data, isLoading} = useApi({
+    queryFn: getShipments,
+    queryKey: ['getShipments'],
+  });
+
   return (
     <View style={{flex: 1}}>
       <Head />
-
-      <FlashList
-        estimatedItemSize={97}
-        data={[{num: '41785691423'}, {num: '41785691423'}]}
-        renderItem={ShipItem}
-      />
+      {isLoading ? (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <ActivityIndicator color={Colors.primary} />
+        </View>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={data?.message}
+          renderItem={ShipItem}
+        />
+      )}
     </View>
   );
 };
@@ -279,7 +301,8 @@ const styles = StyleSheet.create({
 
   orderStatusMainView: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: isPhone ? 'center' : 'flex-end',
+    paddingHorizontal: !isPhone ? 20 : 0,
   },
   orderStatusButton: {
     borderWidth: 1,
@@ -287,5 +310,6 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 5,
     borderColor: 'white',
+    backgroundColor: '#D9E6FD',
   },
 });

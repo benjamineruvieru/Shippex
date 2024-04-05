@@ -1,7 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
-import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
-import {deleteItem} from '../utilis/storage';
-import messaging from '@react-native-firebase/messaging';
+import {useQuery} from '@tanstack/react-query';
+import {deleteItem} from '../services/storage';
 
 interface UseApiProps<TData, TError> {
   queryKey: unknown[];
@@ -26,14 +25,10 @@ export const useApi = <TData, TError>({
           {
             navigation.reset({
               index: 0,
-              routes: [{name: 'OnboardingScreen'}],
+              routes: [{name: 'SplashScreen'}],
             });
-            deleteItem('userdetails');
-            deleteItem('cart');
-            deleteItem('favourites');
-            deleteItem('unreadNotification');
-            deleteItem('token');
-            messaging().unsubscribeFromTopic('newproduct');
+            deleteItem('loggedIn');
+            deleteItem('name');
           }
           break;
         default:
@@ -46,30 +41,3 @@ export const useApi = <TData, TError>({
 
   return data;
 };
-
-interface UseInfiniteApiProps<TData, TError> {
-  queryKey: unknown[];
-  queryFunction: ({pageParam}: {pageParam?: number}) => Promise<TData>;
-  onSuccess?: (data: TData) => void;
-}
-
-export function useInfiniteApi<TData, TError>({
-  queryKey,
-  queryFunction,
-  onSuccess,
-}: UseInfiniteApiProps<TData, TError>) {
-  return useInfiniteQuery(queryKey, queryFunction, {
-    retry: true,
-    failureCount: 3,
-    getNextPageParam: (lastPage, pages) => {
-      const {currentPage, totalPages} = lastPage.paginationData;
-
-      if (totalPages > currentPage) {
-        return currentPage + 1;
-      } else {
-        return undefined;
-      }
-    },
-    onSuccess,
-  });
-}
